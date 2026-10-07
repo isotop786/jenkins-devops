@@ -38,7 +38,7 @@ pipeline {
 
 		stage("Compile"){
 			steps {
-				echo 
+				echo "compiling the project"
 				sh "mvn clean compile"
 			}
 		}

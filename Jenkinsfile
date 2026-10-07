@@ -32,6 +32,19 @@ pipeline {
 					echo "Integration Test"
 			}
 		}
+	} 
+	
+	post {
+		always {
+			echo "The is the post running all the time"
+		}
+		success {
+			echo "The is the success running when there's a success"
+		}
+		failure {
+			echo "The is the failure running when there's a failure"
+		}
+
 	}
 
 }

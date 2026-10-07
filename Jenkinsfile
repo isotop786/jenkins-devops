@@ -42,19 +42,53 @@ pipeline {
 				sh "mvn clean compile"
 			}
 		}
+		stage("Package"){
+			steps {
+				echo "Making the JAR file"
+				sh "mvn package -DskipTests"
+			}
+		}
 
-		stage("Test"){
-			steps{
-					echo "Test is on going"
-					sh "mvn test"
+		stage('Build Docker Image'){
+			steps {
+				// "docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG"
+				echo "Building docker image ...."
+				script{
+					dockerImage = docker.build("marufuli707/currency-exchange-devops:$env.BUILD_TAG")
+				}
 			}
 		}
-		stage("Integration Test"){
-			steps{
-					echo "Integration Test"
-					sh "mvn failsafe:integration-test failsafe:verify"
+
+
+		stage('Push Docker Image'){
+			steps {
+				// "docker build -t in28min/currency-exchange-devops:$env.BUILD_TAG"
+				echo "Pushing docker image ...."
+				script{
+					// dockerImage = docker.build("marufuli707/currency-exchange-devops:$env.BUILD_TAG")
+					docker.withRegistry('','dockerHubID')
+					{
+						dockerImage.push();
+						dockerImage.push('latest');
+					}
+					
+				}
+
 			}
 		}
+
+		// stage("Test"){
+		// 	steps{
+		// 			echo "Test is on going"
+		// 			sh "mvn test"
+		// 	}
+		// }
+		// stage("Integration Test"){
+		// 	steps{
+		// 			echo "Integration Test"
+		// 			sh "mvn failsafe:integration-test failsafe:verify"
+		// 	}
+		// }
 	} 
 	
 	post {

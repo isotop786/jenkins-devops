@@ -32,7 +32,7 @@ pipeline {
 					echo "Buidl Tag - $env.BUILD_TAG"
 					echo "Buidl url - $env.BUILD_URL"
 					sh "mvn --version"
-					sh "Docker --version"
+					sh "docker version"
 			}
 		}
 		stage("Test"){

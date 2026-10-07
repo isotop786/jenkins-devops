@@ -16,6 +16,11 @@ pipeline {
 	agent any
 	// agent { docker { image 'maven:3.6.3' } }
 	// agent { docker { image 'python:3.15-rc' } }
+	environment {
+		dockerHome = tool 'my-docker'
+		mavenHome = tool 'my-maven'
+		PATH = "$dockerHome/bin:$mavenHome/bin:$PATH"
+	}
 	stages {
 		stage("Build"){
 			steps{
@@ -26,7 +31,8 @@ pipeline {
 					echo "Job Name: $env.JOB_NAME"
 					echo "Buidl Tag - $env.BUILD_TAG"
 					echo "Buidl url - $env.BUILD_URL"
-					// sh "python --version"
+					sh "mvn --version"
+					sh "Docker --version"
 			}
 		}
 		stage("Test"){

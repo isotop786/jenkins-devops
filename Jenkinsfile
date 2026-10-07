@@ -20,7 +20,7 @@ pipeline {
 		stage("Build"){
 			steps{
 					echo "Bulid"
-					sh "mvn --version"
+					sh "python --version"
 			}
 		}
 		stage("Test"){

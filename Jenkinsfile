@@ -13,14 +13,20 @@
 
 // DECLARATIVE
 pipeline {
-	// agent any
+	agent any
 	// agent { docker { image 'maven:3.6.3' } }
-	agent { docker { image 'python:3.15-rc' } }
+	// agent { docker { image 'python:3.15-rc' } }
 	stages {
 		stage("Build"){
 			steps{
 					echo "Bulid"
-					sh "python --version"
+					echo "Path: $PATH"
+					echo "Build_number - $env.BUILD_NUMBER"
+					echo "Build ID: $env.BUILD_ID"
+					echo "Job Name: $env.JOB_NAME"
+					echo "Buidl Tag - $env.BUILD_TAG"
+					echo "Buidl url - $env.BUILD_URL"
+					// sh "python --version"
 			}
 		}
 		stage("Test"){
